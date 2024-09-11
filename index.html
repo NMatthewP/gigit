@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gig it</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Gig it</h1>
+        <input type="text" id="text-input" placeholder="What services would you like? ">
+        <button id="submit-button">Gig it now!</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        document.getElementById('submit-button').addEventListener('click', async () => {
+            const text = document.getElementById('text-input').value;
+            const response = await fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text })
+            });
+            const data = await response.json();
+            document.getElementById('result').textContent = `Looking for ${data.prediction}'s near you`;
+        });
+    </script>
+</body>
+</html>
